@@ -4,14 +4,9 @@ import axios from "axios";
 
 function CreateRoom() {
   const navigate = useNavigate();
-
   const [roomCode, setRoomCode] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
-
-  useEffect(() => {
-    createRoom();
-  }, []);
 
   const createRoom = async () => {
     try {
@@ -23,12 +18,15 @@ function CreateRoom() {
       );
 
       setRoomCode(res.data.roomCode);
-
     } catch (error) {
       console.log(error);
       alert("Room creation failed");
     }
   };
+
+  useEffect(() => {
+    createRoom();
+  }, []);
 
   return (
     <div
@@ -59,9 +57,7 @@ function CreateRoom() {
         <p>Players: 1 / 4</p>
 
         <button
-          onClick={() =>
-            navigator.clipboard.writeText(roomCode)
-          }
+          onClick={() => navigator.clipboard.writeText(roomCode)}
         >
           Copy Room Code
         </button>
