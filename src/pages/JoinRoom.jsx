@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -14,14 +14,21 @@ function JoinRoom() {
         return;
       }
 
+      const user = JSON.parse(
+        localStorage.getItem("user")
+      );
+
       const res = await axios.post(
         "http://localhost:5000/api/room/join",
         {
           roomCode,
+          username: user.username,
         }
       );
 
       alert(res.data.message);
+
+      navigate("/home");
 
     } catch (error) {
       alert(
@@ -49,6 +56,7 @@ function JoinRoom() {
           textAlign: "center",
           border: "2px solid gold",
           borderRadius: "15px",
+          background: "#1a1a1a",
         }}
       >
         <h1>🚪 Join Room</h1>
@@ -62,20 +70,33 @@ function JoinRoom() {
             width: "100%",
             padding: "12px",
             marginTop: "15px",
+            borderRadius: "8px",
           }}
         />
 
         <br />
         <br />
 
-        <button onClick={handleJoin}>
+        <button
+          onClick={handleJoin}
+          style={{
+            padding: "12px 25px",
+            cursor: "pointer",
+          }}
+        >
           Join Room
         </button>
 
         <br />
         <br />
 
-        <button onClick={() => navigate("/home")}>
+        <button
+          onClick={() => navigate("/home")}
+          style={{
+            padding: "12px 25px",
+            cursor: "pointer",
+          }}
+        >
           Back Home
         </button>
       </div>
