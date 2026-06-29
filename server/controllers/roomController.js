@@ -1,17 +1,19 @@
 const db = require("../config/db");
 
 // CREATE ROOM
+// CREATE ROOM
 const createRoom = async (req, res) => {
   try {
-    const { owner_id } = req.body;
+    const { owner_id, owner_name } = req.body;
 
     const roomCode =
       "ROOM-" + Math.floor(100000 + Math.random() * 900000);
 
     await db.promise().query(
-      `INSERT INTO rooms (room_code, owner_id)
-       VALUES (?, ?)`,
-      [roomCode, owner_id]
+      `INSERT INTO rooms
+      (room_code, owner_id, owner_name)
+      VALUES (?, ?, ?)`,
+      [roomCode, owner_id, owner_name]
     );
 
     res.status(201).json({
@@ -96,7 +98,146 @@ const joinRoom = async (req, res) => {
   }
 };
 
+
+const getRoom = async (req, res) => {
+  try {
+    const { roomCode } = req.params;
+
+    const [rooms] = await db.promise().query(
+      "SELECT * FROM rooms WHERE room_code = ?",
+      [roomCode]
+    );
+
+    if (rooms.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Room Not Found",
+      });
+    }
+
+    res.json({
+      success: true,
+      room: rooms[0],
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+
+const startGame = async (req, res) => {
+  try {
+    const { roomCode } = req.body;
+
+    const [rooms] = await db.promise().query(
+      "SELECT * FROM rooms WHERE room_code = ?",
+      [roomCode]
+    );
+
+    if (rooms.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Room Not Found",
+      });
+    }
+
+    const room = rooms[0];
+
+    const roles = [
+      "Badshah",
+      "Wazir",
+      "Sipahi",
+      "Chor",
+    ];
+
+    roles.sort(() => Math.random() - 0.5);
+
+    await db.promise().query(
+      `UPDATE rooms
+       SET game_started = 1,
+       player1_role = ?,
+       player2_role = ?,
+       player3_role = ?,
+       player4_role = ?
+       WHERE room_code = ?`,
+      [
+        roles[0],
+        roles[1],
+        roles[2],
+        roles[3],
+        roomCode,
+      ]
+    );
+
+    res.json({
+      success: true,
+      message: "Game Started",
+      roles,
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+const getRole = async (req, res) => {
+  try {
+    const { roomCode, username } = req.body;
+
+    const [rooms] = await db.promise().query(
+      "SELECT * FROM rooms WHERE room_code = ?",
+      [roomCode]
+    );
+
+    if (rooms.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Room Not Found",
+      });
+    }
+
+    const room = rooms[0];
+
+    let role = "";
+
+    if (room.player2 === username) {
+      role = room.player2_role;
+    } else if (room.player3 === username) {
+      role = room.player3_role;
+    } else if (room.player4 === username) {
+      role = room.player4_role;
+    }
+
+    res.json({
+      success: true,
+      role,
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
 module.exports = {
   createRoom,
   joinRoom,
+  getRoom,
+  startGame,
+  getRole,
 };

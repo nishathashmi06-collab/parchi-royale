@@ -28,7 +28,12 @@ function JoinRoom() {
 
       alert(res.data.message);
 
-      navigate("/home");
+      localStorage.setItem(
+        "roomCode",
+        roomCode
+      );
+
+      navigate("/role");
 
     } catch (error) {
       alert(
