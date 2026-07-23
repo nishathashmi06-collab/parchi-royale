@@ -1,0 +1,793 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#0b0b12;
+}
+
+.game-page{
+    min-height:100vh;
+    padding:30px;
+    background:
+    radial-gradient(circle at top,#2d2155 0%,#0b0b12 45%,#050505 100%);
+    color:white;
+}
+
+/* HEADER */
+
+.game-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:20px 30px;
+
+    border:2px solid rgba(255,215,0,.4);
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.05);
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:0 0 35px rgba(255,215,0,.15);
+
+    margin-bottom:25px;
+}
+
+.logo{
+
+    color:#FFD700;
+
+    font-size:40px;
+
+    letter-spacing:3px;
+
+    text-shadow:0 0 15px gold;
+}
+
+.room-box{
+
+    background:#5b2eff;
+
+    color:white;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    font-weight:bold;
+
+    box-shadow:0 0 20px #6d46ff;
+}
+
+.leave-btn{
+
+    background:#d11a2a;
+
+    color:white;
+
+    border:none;
+
+    padding:13px 25px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.leave-btn:hover{
+
+    background:#ff3b4f;
+
+    transform:scale(1.05);
+}
+
+/* TOP INFO */
+
+.top-info{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+    margin-bottom:30px;
+}
+
+.info-card{
+
+    background:rgba(255,255,255,.05);
+
+    border:2px solid rgba(255,215,0,.25);
+
+    border-radius:18px;
+
+    padding:25px;
+
+    text-align:center;
+
+    transition:.35s;
+}
+
+.info-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:gold;
+
+    box-shadow:0 0 25px rgba(255,215,0,.4);
+}
+
+.info-card span{
+
+    color:#bbbbbb;
+
+    display:block;
+
+    margin-bottom:12px;
+
+    font-size:15px;
+}
+
+.info-card h2{
+
+    color:#FFD700;
+
+    font-size:32px;
+}
+
+/* MAIN */
+
+.game-body{
+
+    display:grid;
+
+    grid-template-columns:2fr 1.4fr 1.3fr;
+
+    gap:25px;
+}
+
+/* ===========================
+   PLAYERS PANEL
+=========================== */
+
+.players-panel{
+    background:rgba(255,255,255,.05);
+    border:2px solid rgba(255,215,0,.25);
+    border-radius:20px;
+    padding:25px;
+    backdrop-filter:blur(15px);
+}
+
+.players-panel h2{
+    text-align:center;
+    color:#FFD700;
+    margin-bottom:20px;
+    font-size:28px;
+    letter-spacing:1px;
+}
+
+/* Player Card */
+
+.player-card{
+
+    display:flex;
+    align-items:center;
+    gap:18px;
+
+    padding:18px;
+
+    margin-bottom:18px;
+
+    border:2px solid rgba(255,255,255,.15);
+
+    border-radius:18px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.06),
+        rgba(255,255,255,.03)
+    );
+
+    cursor:pointer;
+
+    transition:.35s;
+}
+
+.player-card:hover{
+
+    transform:translateY(-5px) scale(1.02);
+
+    border-color:#FFD700;
+
+    box-shadow:
+    0 0 20px rgba(255,215,0,.35);
+}
+
+.player-card.active{
+
+    border:3px solid gold;
+
+    background:linear-gradient(
+        135deg,
+        #3b2a00,
+        #1b1b1b
+    );
+
+    box-shadow:
+    0 0 25px gold;
+}
+
+.avatar{
+
+    width:70px;
+    height:70px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        gold,
+        orange
+    );
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:34px;
+
+    color:black;
+
+    font-weight:bold;
+
+    box-shadow:
+    0 0 20px gold;
+}
+
+.player-card h3{
+
+    font-size:22px;
+}
+
+.player-card p{
+
+    margin-top:5px;
+
+    color:#00ff66;
+
+    font-size:15px;
+}
+
+
+/* ===========================
+        ROLE PANEL
+=========================== */
+
+.role-panel{
+
+    background:rgba(255,255,255,.05);
+
+    border:2px solid rgba(255,215,0,.25);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    text-align:center;
+
+    backdrop-filter:blur(15px);
+}
+
+.role-panel h2{
+
+    color:#FFD700;
+
+    margin-bottom:25px;
+}
+
+.role-card{
+
+    height:230px;
+
+    border-radius:22px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #4427b8,
+        #24144b
+    );
+
+    border:3px solid gold;
+
+    box-shadow:
+    0 0 35px rgba(255,215,0,.35);
+
+    margin-bottom:25px;
+
+    transition:.4s;
+}
+
+.role-card:hover{
+
+    transform:scale(1.03);
+
+    box-shadow:
+    0 0 45px gold;
+}
+
+.role-card h1{
+
+    color:white;
+
+    font-size:42px;
+
+    text-shadow:0 0 18px gold;
+}
+
+.waiting{
+
+    color:#dddddd;
+
+    margin-top:20px;
+
+    font-size:20px;
+
+    line-height:35px;
+}
+
+.choose{
+
+    color:#FFD700;
+
+    margin:25px 0;
+}
+
+.confirm-btn{
+
+    width:100%;
+
+    padding:18px;
+
+    font-size:20px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    color:black;
+
+    font-weight:bold;
+
+    background:linear-gradient(
+        90deg,
+        gold,
+        orange
+    );
+
+    transition:.35s;
+}
+
+.confirm-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 0 30px gold;
+}
+
+
+/* ===========================
+        RULES PANEL
+=========================== */
+
+.rules-panel{
+
+    background:rgba(255,255,255,.05);
+
+    border:2px solid rgba(255,215,0,.25);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    backdrop-filter:blur(15px);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+}
+
+.rules-panel h2{
+
+    color:#FFD700;
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+    font-size:28px;
+}
+
+.rules-panel ul{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+}
+
+.rules-panel li{
+
+    margin-bottom:18px;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.05);
+
+    transition:.3s;
+
+    font-size:16px;
+}
+
+.rules-panel li:hover{
+
+    background:rgba(255,215,0,.12);
+
+    transform:translateX(8px);
+}
+
+.rules-panel hr{
+
+    border:1px solid rgba(255,215,0,.25);
+
+    margin:25px 0;
+}
+
+.rules-panel h3{
+
+    color:gold;
+
+    margin-bottom:12px;
+}
+
+.rules-panel p{
+
+    color:#ddd;
+
+    line-height:28px;
+}
+
+/* ===========================
+        FLOAT ANIMATION
+=========================== */
+
+@keyframes floating{
+
+    0%{
+
+        transform:translateY(0px);
+
+    }
+
+    50%{
+
+        transform:translateY(-6px);
+
+    }
+
+    100%{
+
+        transform:translateY(0px);
+
+    }
+
+}
+
+.role-card{
+
+    animation:floating 3s ease-in-out infinite;
+}
+
+.logo{
+
+    animation:floating 2.5s ease-in-out infinite;
+}
+
+/* ===========================
+        SCROLLBAR
+=========================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:gold;
+
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-track{
+
+    background:#111;
+}
+
+/* ===========================
+        RESPONSIVE
+=========================== */
+
+@media(max-width:1200px){
+
+    .game-body{
+
+        grid-template-columns:1fr;
+    }
+
+    .players-panel{
+
+        order:1;
+    }
+
+    .role-panel{
+
+        order:2;
+    }
+
+    .rules-panel{
+
+        order:3;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .game-page{
+
+        padding:15px;
+    }
+
+    .game-header{
+
+        flex-direction:column;
+
+        gap:15px;
+    }
+
+    .logo{
+
+        font-size:30px;
+    }
+
+    .top-info{
+
+        grid-template-columns:1fr;
+    }
+
+    .player-card{
+
+        flex-direction:column;
+
+        text-align:center;
+    }
+
+    .avatar{
+
+        width:60px;
+
+        height:60px;
+    }
+
+}
+
+/* ===========================
+        GLOW EFFECTS
+=========================== */
+
+.player-card.active{
+
+    animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+
+    0%{
+
+        box-shadow:0 0 10px gold;
+    }
+
+    50%{
+
+        box-shadow:0 0 35px gold;
+    }
+
+    100%{
+
+        box-shadow:0 0 10px gold;
+    }
+
+}
+
+.confirm-btn{
+
+    letter-spacing:1px;
+}
+
+.confirm-btn:active{
+
+    transform:scale(.96);
+}
+
+.leave-btn:active{
+
+    transform:scale(.95);
+}
+
+.info-card:active{
+
+    transform:scale(.98);
+}
+
+/* ===========================
+      PREMIUM GLASS EFFECT
+=========================== */
+
+.players-panel,
+.role-panel,
+.rules-panel,
+.info-card,
+.game-header{
+
+    box-shadow:
+    inset 0 0 15px rgba(255,255,255,.05),
+    0 10px 35px rgba(0,0,0,.35);
+
+}
+
+/* ===========================
+      FOOTER STATUS
+=========================== */
+
+.status-box{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    background:rgba(255,215,0,.08);
+
+    border:1px solid rgba(255,215,0,.2);
+
+    color:#FFD700;
+
+    font-weight:bold;
+}
+
+/* TOP PROFILE */
+
+.profile-left{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.profile-avatar{
+
+width:70px;
+
+height:70px;
+
+border-radius:50%;
+
+background:linear-gradient(135deg,#FFD700,#ff9900);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:35px;
+
+color:#000;
+
+font-weight:bold;
+
+box-shadow:0 0 20px gold;
+
+}
+
+.online{
+
+color:#00ff66;
+
+font-size:14px;
+
+}
+
+.center-logo{
+
+font-size:34px;
+
+font-weight:bold;
+
+letter-spacing:2px;
+
+color:gold;
+
+text-shadow:0 0 18px gold;
+
+}
+
+.top-right{
+
+display:flex;
+
+gap:15px;
+
+}
+
+.top-box{
+
+background:#1f1f35;
+
+padding:12px 18px;
+
+border-radius:12px;
+
+border:1px solid rgba(255,215,0,.3);
+
+font-weight:bold;
+
+min-width:95px;
+
+text-align:center;
+
+box-shadow:0 0 15px rgba(255,215,0,.2);
+
+transition:.3s;
+
+}
+
+.top-box:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 0 20px gold;
+
+}
+
+

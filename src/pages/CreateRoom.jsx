@@ -10,16 +10,22 @@ function CreateRoom() {
 
     const user = JSON.parse(localStorage.getItem("user"));
 
+    // CREATE ROOM
     const createRoom = async () => {
         try {
             const res = await axios.post(
                 "http://localhost:5000/api/room/create",
                 {
                     owner_id: user.id,
+                    owner_name: user.username,
                 }
             );
 
             setRoomCode(res.data.roomCode);
+
+            localStorage.setItem("roomCode", res.data.roomCode);
+
+            navigate("/lobby");
 
         } catch (error) {
             console.log(error);
@@ -27,6 +33,7 @@ function CreateRoom() {
         }
     };
 
+    // GET ROOM DETAILS
     const getRoomDetails = async (code) => {
         try {
             const res = await axios.get(
@@ -40,6 +47,7 @@ function CreateRoom() {
         }
     };
 
+    // START GAME
     const handleStartGame = async () => {
         try {
             const res = await axios.post(
@@ -111,19 +119,13 @@ function CreateRoom() {
                         fontSize: "20px",
                     }}
                 >
-                    <p>👑 Owner</p>
+                    <p>👑 {roomData?.owner_name || user.username}</p>
 
-                    <p>
-                        👤 {roomData?.player2 || "Empty Slot"}
-                    </p>
+                    <p>👤 {roomData?.player2 || "Empty Slot"}</p>
 
-                    <p>
-                        👤 {roomData?.player3 || "Empty Slot"}
-                    </p>
+                    <p>👤 {roomData?.player3 || "Empty Slot"}</p>
 
-                    <p>
-                        👤 {roomData?.player4 || "Empty Slot"}
-                    </p>
+                    <p>👤 {roomData?.player4 || "Empty Slot"}</p>
                 </div>
 
                 <h2>
@@ -135,7 +137,7 @@ function CreateRoom() {
                         navigator.clipboard.writeText(roomCode)
                     }
                 >
-                    Copy Room Code
+                    📋 Copy Room Code
                 </button>
 
                 <br />
@@ -159,7 +161,7 @@ function CreateRoom() {
                         cursor: "pointer",
                     }}
                 >
-                    Back Home
+                    ⬅ Back Home
                 </button>
             </div>
         </div>

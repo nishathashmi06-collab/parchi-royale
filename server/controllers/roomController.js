@@ -211,11 +211,23 @@ const getRole = async (req, res) => {
 
     let role = "";
 
-    if (room.player2 === username) {
+    // OWNER
+    if (room.owner_name === username) {
+      role = room.player1_role;
+    }
+
+    // PLAYER 2
+    else if (room.player2 === username) {
       role = room.player2_role;
-    } else if (room.player3 === username) {
+    }
+
+    // PLAYER 3
+    else if (room.player3 === username) {
       role = room.player3_role;
-    } else if (room.player4 === username) {
+    }
+
+    // PLAYER 4
+    else if (room.player4 === username) {
       role = room.player4_role;
     }
 
@@ -234,10 +246,142 @@ const getRole = async (req, res) => {
   }
 };
 
+
+// SELECT PLAYER (WAZIR GUESS)
+// SELECT PLAYER (WAZIR GUESS)
+
+const selectPlayer = async (req, res) => {
+  try {
+    const { roomCode, selectedPlayer } = req.body;
+
+    const [rooms] = await db.promise().query(
+      "SELECT * FROM rooms WHERE room_code = ?",
+      [roomCode]
+    );
+
+    if (rooms.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Room Not Found",
+      });
+    }
+
+    const room = rooms[0];
+
+    let correct = false;
+
+    // Check if selected player is Chor
+    if (
+      (room.owner_name === selectedPlayer &&
+        room.player1_role === "Chor") ||
+
+      (room.player2 === selectedPlayer &&
+        room.player2_role === "Chor") ||
+
+      (room.player3 === selectedPlayer &&
+        room.player3_role === "Chor") ||
+
+      (room.player4 === selectedPlayer &&
+        room.player4_role === "Chor")
+    ) {
+      correct = true;
+    }
+
+    const winner = correct
+      ? "Badshah Team"
+      : "Chor";
+
+    // Save result
+    await db.promise().query(
+      `UPDATE rooms
+       SET
+       selected_player = ?,
+       winner = ?,
+       game_status = 'finished'
+       WHERE room_code = ?`,
+      [
+        selectedPlayer,
+        winner,
+        roomCode,
+      ]
+    );
+
+    res.json({
+      success: true,
+      correct,
+      winner,
+      selectedPlayer,
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+// REVEAL ALL ROLES
+
+const revealRoles = async (req, res) => {
+  try {
+    const { roomCode } = req.params;
+
+    const [rooms] = await db.promise().query(
+      "SELECT * FROM rooms WHERE room_code = ?",
+      [roomCode]
+    );
+
+    if (rooms.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Room Not Found",
+      });
+    }
+
+    const room = rooms[0];
+
+    res.json({
+      success: true,
+
+      room: {
+        owner_name: room.owner_name,
+        player2: room.player2,
+        player3: room.player3,
+        player4: room.player4,
+
+        player1_role: room.player1_role,
+        player2_role: room.player2_role,
+        player3_role: room.player3_role,
+        player4_role: room.player4_role,
+
+        winner: room.winner,
+        selected_player: room.selected_player,
+      },
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+
+
+
+
 module.exports = {
   createRoom,
   joinRoom,
   getRoom,
   startGame,
   getRole,
+  selectPlayer,
+  revealRoles,   // 👈 add
 };

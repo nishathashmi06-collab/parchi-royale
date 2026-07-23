@@ -14,9 +14,7 @@ function JoinRoom() {
         return;
       }
 
-      const user = JSON.parse(
-        localStorage.getItem("user")
-      );
+      const user = JSON.parse(localStorage.getItem("user"));
 
       const res = await axios.post(
         "http://localhost:5000/api/room/join",
@@ -28,12 +26,11 @@ function JoinRoom() {
 
       alert(res.data.message);
 
-      localStorage.setItem(
-        "roomCode",
-        roomCode
-      );
+      // Save room code for Lobby page
+      localStorage.setItem("roomCode", roomCode);
 
-      navigate("/role");
+      // Go to Lobby instead of Role Screen
+      navigate("/lobby");
 
     } catch (error) {
       alert(
@@ -102,7 +99,7 @@ function JoinRoom() {
             cursor: "pointer",
           }}
         >
-          Back Home
+          ⬅ Back Home
         </button>
       </div>
     </div>

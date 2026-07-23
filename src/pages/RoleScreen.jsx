@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function RoleScreen() {
+  const navigate = useNavigate();
+
   const [role, setRole] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -26,6 +29,13 @@ function RoleScreen() {
 
   useEffect(() => {
     getRole();
+
+    const timer = setTimeout(() => {
+      navigate("/game");
+    }, 3000);
+
+    return () => clearTimeout(timer);
+
   }, []);
 
   return (
@@ -54,11 +64,21 @@ function RoleScreen() {
         <h2
           style={{
             color: "gold",
-            fontSize: "40px",
+            fontSize: "45px",
+            marginTop: "20px",
           }}
         >
-          {role}
+          {role || "Loading..."}
         </h2>
+
+        <p
+          style={{
+            marginTop: "20px",
+            color: "#ccc",
+          }}
+        >
+          Game will start in 3 seconds...
+        </p>
       </div>
     </div>
   );
