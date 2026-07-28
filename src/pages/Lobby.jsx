@@ -38,7 +38,11 @@ function Lobby() {
 
       alert(res.data.message);
 
-      navigate("/role");
+      navigate("/royal-hall", {
+        state: {
+          room: res.data.room,
+        },
+      });
 
     } catch (err) {
       console.log(err);

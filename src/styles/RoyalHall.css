@@ -1,0 +1,39 @@
+.kingMessage{
+    font-size:28px;
+    color:gold;
+    text-align:center;
+    animation:fadeIn 1s ease-in-out;
+    text-shadow:0 0 15px gold;
+}
+
+.king{
+    font-size:120px;
+    animation:kingEntry 1s ease-in-out;
+    filter:drop-shadow(0 0 15px gold);
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+
+}
+
+@keyframes kingEntry{
+
+    from{
+        opacity:0;
+        transform:translateY(-120px) scale(.5);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+
+}

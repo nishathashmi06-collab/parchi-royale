@@ -11,6 +11,7 @@ import PickCard from "./pages/PickCard";
 import Game from "./pages/Game";
 import Winner from "./pages/Winner";
 import Reveal from "./pages/Reveal";
+import RoyalHall from "./pages/RoyalHall";
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
         <Route path="/winner" element={<Winner />} />
 
         <Route path="/reveal" element={<Reveal />} />
+
+        <Route path="/royal-hall" element={<RoyalHall />} />
 
       </Routes>
     </BrowserRouter>
